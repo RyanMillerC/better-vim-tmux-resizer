@@ -1,5 +1,7 @@
 # Vim Tmux Resizer
 
+## This repo is in progress. Don't use it...yet.
+
 This is a fork of [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
 which allows resizing panes instead of switching panes.
 
