@@ -1,12 +1,11 @@
-Vim Tmux Navigator
-==================
+# Vim Tmux Resizer
 
-This plugin is a repackaging of [Mislav Marohnić's][] tmux-navigator
-configuration described in [this gist][]. When combined with a set of tmux
-key bindings, the plugin will allow you to navigate seamlessly between
-vim and tmux splits using a consistent set of hotkeys.
+This is a fork of [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
+which allows resizing panes instead of switching panes.
 
 **NOTE**: This requires tmux v1.8 or higher.
+
+**NOTE:** Everything below this line is from the original project. Ignore it.
 
 Usage
 -----
