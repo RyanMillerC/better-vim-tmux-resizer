@@ -19,7 +19,7 @@ and tmux splits seamlessly.
 - `<meta-k>` => Up
 - `<meta-l>` => Right
 
-**Note** - you don't need to use your tmux `prefix` key sequence before using
+**NOTE:** You don't need to use your tmux `prefix` key sequence before using
 the mappings.
 
 If you want to use alternate key mappings, see the [configuration section
@@ -107,7 +107,7 @@ nnoremap <silent> {Up-Mapping} :TmuxResizeUp<CR>
 nnoremap <silent> {Right-Mapping} :TmuxResizeRight<CR>
 ```
 
-*Note* Each instance of `{Left-Mapping}` or `{Down-Mapping}` must be replaced
+**NOTE:** Each instance of `{Left-Mapping}` or `{Down-Mapping}` must be replaced
 in the above code with the desired mapping. Ie, the mapping for `<meta-h>` =>
 Left would be created with `nnoremap <silent> <meta-h> :TmuxResizeLeft<cr>`.
 
