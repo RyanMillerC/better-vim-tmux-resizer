@@ -6,6 +6,21 @@ if exists("g:loaded_tmux_resizer") || &cp || v:version < 700
 endif
 let g:loaded_tmux_resizer = 1
 
+if !exists("g:tmux_resizer_resize_count")
+  let g:tmux_resizer_resize_count = 5
+endif
+
+if !exists("g:tmux_resizer_vertical_resize_count")
+  let g:tmux_resizer_vertical_resize_count = 10
+endif
+
+if !get(g:, 'tmux_resizer_no_mappings', 0)
+  nnoremap <silent> <M-h> :TmuxResizeLeft<CR>
+  nnoremap <silent> <M-j> :TmuxResizeDown<CR>
+  nnoremap <silent> <M-k> :TmuxResizeUp<CR>
+  nnoremap <silent> <M-l> :TmuxResizeRight<CR>
+endif
+
 function! s:VimResize(direction)
   " Resize toward given direction, like tmux
   if (a:direction ==# 'h' || a:direction ==# 'k')
@@ -26,13 +41,6 @@ function! s:VimResize(direction)
   execute l:command . ' ' . l:modifier . l:window_resize_count . '<CR>'
 endfunction
 
-if !get(g:, 'tmux_resizer_no_mappings', 0)
-  nnoremap <silent> <M-h> :TmuxResizeLeft<CR>
-  nnoremap <silent> <M-j> :TmuxResizeDown<CR>
-  nnoremap <silent> <M-k> :TmuxResizeUp<CR>
-  nnoremap <silent> <M-l> :TmuxResizeRight<CR>
-endif
-
 if empty($TMUX)
   command! TmuxResizeLeft call s:VimResize('h')
   command! TmuxResizeDown call s:VimResize('j')
@@ -45,14 +53,6 @@ command! TmuxResizeLeft call s:TmuxAwareResize('h')
 command! TmuxResizeDown call s:TmuxAwareResize('j')
 command! TmuxResizeUp call s:TmuxAwareResize('k')
 command! TmuxResizeRight call s:TmuxAwareResize('l')
-
-if !exists("g:tmux_resizer_resize_count")
-  let g:tmux_resizer_resize_count = 5
-endif
-
-if !exists("g:tmux_resizer_vertical_resize_count")
-  let g:tmux_resizer_vertical_resize_count = 10
-endif
 
 function! s:TmuxOrTmateExecutable()
   return (match($TMUX, 'tmate') != -1 ? 'tmate' : 'tmux')
