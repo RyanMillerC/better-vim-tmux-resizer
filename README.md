@@ -12,14 +12,13 @@ which allows resizing panes instead of switching panes.
 Usage
 -----
 
-This plugin provides the following mappings which allow you to move between
-Vim panes and tmux splits seamlessly.
+This plugin provides the following mappings which allow you to resize Vim panes
+and tmux splits seamlessly.
 
-- `<ctrl-h>` => Left
-- `<ctrl-j>` => Down
-- `<ctrl-k>` => Up
-- `<ctrl-l>` => Right
-- `<ctrl-\>` => Previous split
+- `<meta-h>` => Left
+- `<meta-j>` => Down
+- `<meta-k>` => Up
+- `<meta-l>` => Right
 
 **Note** - you don't need to use your tmux `prefix` key sequence before using
 the mappings.
