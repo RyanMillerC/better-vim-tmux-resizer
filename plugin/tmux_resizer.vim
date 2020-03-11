@@ -14,7 +14,7 @@ if !exists("g:tmux_resizer_vertical_resize_count")
   let g:tmux_resizer_vertical_resize_count = 10
 endif
 
-if !get(g:, 'tmux_resizer_no_mappings', 0)
+if !exists("g:tmux_resizer_no_mappings")
   nnoremap <silent> <M-h> :TmuxResizeLeft<CR>
   nnoremap <silent> <M-j> :TmuxResizeDown<CR>
   nnoremap <silent> <M-k> :TmuxResizeUp<CR>
