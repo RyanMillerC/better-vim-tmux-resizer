@@ -3,10 +3,9 @@
 > Resize tmux panes and Vim windows with ease.
 
 This is a fork of [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
-which allows resizing panes and windows instead of navigating between them.
-
-It is 100% compatible with vim-tmux-navigator so you can have both installed and
-navigate/resize with similar hotkeys.
+which allows resizing panes and windows instead of navigating between them. It is 100%
+compatible with vim-tmux-navigator so you can have both installed and navigate/resize
+with similar hotkeys.
 
 **NOTE**: This requires tmux v1.8 or higher.
 
