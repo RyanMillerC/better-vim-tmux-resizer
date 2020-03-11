@@ -38,7 +38,7 @@ install the plugin:
 Add the following line to your `~/.vimrc` file
 
 ``` vim
-Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'RyanMillerC/vim-tmux-resizer'
 ```
 
 Then run
@@ -56,26 +56,25 @@ To configure the tmux side of this customization there are two options:
 Add the following to your `~/.tmux.conf` file:
 
 ``` tmux
-# Smart pane switching with awareness of Vim splits.
-# See: https://github.com/christoomey/vim-tmux-navigator
+# Smart pane resizing with awareness of Vim splits.
+# See: https://github.com/RyanMillerC/vim-tmux-resizer
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
     | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
-bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
-bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
-bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
-if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
 
-bind-key -T copy-mode-vi 'C-h' select-pane -L
-bind-key -T copy-mode-vi 'C-j' select-pane -D
-bind-key -T copy-mode-vi 'C-k' select-pane -U
-bind-key -T copy-mode-vi 'C-l' select-pane -R
-bind-key -T copy-mode-vi 'C-\' select-pane -l
+# Edit values if you use custom resize_count variables
+bind-key -n C-h if-shell "$is_vim" "send-keys C-h"  "resize-pane -L 10"
+bind-key -n C-j if-shell "$is_vim" "send-keys C-j"  "resize-pane -D 5"
+bind-key -n C-k if-shell "$is_vim" "send-keys C-k"  "resize-pane -U 5"
+bind-key -n C-l if-shell "$is_vim" "send-keys C-l"  "resize-pane -R 10"
+
+bind-key -T copy-mode-vi M-h resize-pane -L 10
+bind-key -T copy-mode-vi M-j resize-pane -D 5
+bind-key -T copy-mode-vi M-k resize-pane -U 5
+bind-key -T copy-mode-vi M-l resize-pane -R 10
 ```
+
+**NOTE:** If you use vim-tmux-navigator, you can omit the is_vim line since
+it should already be in your `tmux.conf` file.
 
 #### TPM
 
