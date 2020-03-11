@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# If you use vim-tmux-navigator, you don't need to put this line twice
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
     | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
