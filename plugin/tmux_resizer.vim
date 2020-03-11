@@ -23,15 +23,14 @@ endif
 
 function! s:VimResize(direction)
   " Resize toward given direction, like tmux
-  if (a:direction ==# 'h' || a:direction ==# 'k')
-    let [l:modifier_1, l:modifier_2] = ['+', '-']
-  else
-    let [l:modifier_1, l:modifier_2] = ['-', '+']
-  endif
   let l:current_window_is_last_window = (winnr() == winnr('$'))
-  let l:modifier = l:current_window_is_last_window ? l:modifier_1 : l:modifier_2
+  if (a:direction == 'h' || a:direction == 'k')
+    let l:modifier = l:current_window_is_last_window ? '+' : '-'
+  else
+    let l:modifier = l:current_window_is_last_window ? '-' : '+'
+  endif
 
-  if (a:direction ==# 'h' || a:direction ==# 'l')
+  if (a:direction == 'h' || a:direction == 'l')
     let l:command = 'vertical resize'
     let l:window_resize_count = g:tmux_resizer_vertical_resize_count
   else
@@ -98,7 +97,7 @@ function! s:TmuxAwareResize(direction)
   " a) we're toggling between the last tmux pane;
   " b) we tried resizing windows in vim but it didn't have effect.
   if s:ShouldForwardResizeBackToTmux(tmux_last_pane, at_tab_page_edge)
-    if (a:direction ==# 'h' || a:direction ==# 'l')
+    if (a:direction == 'h' || a:direction == 'l')
       let l:resize_count = g:tmux_resizer_vertical_resize_count
     else
       let l:resize_count = g:tmux_resizer_resize_count
