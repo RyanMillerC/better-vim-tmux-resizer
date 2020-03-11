@@ -14,7 +14,8 @@ and uses the same basic structure. When combined with a set of tmux key
 bindings, the plugin will allow you to resize seamlessly between vim panes and
 tmux splits using a consistent set of hotkeys.
 
-This plugin works well with Vim-tmux-navigator
+This plugin is 100% compatible with vim-tmux-navigator so you can have both
+installed and navigate/resize with similar hotkeys.
 
 NOTE: This requires tmux v1.8 or higher.
 
@@ -30,7 +31,7 @@ CONFIGURATION                             *tmux-resizer-configuration*
 * Custom Key Bindings
  let g:tmux_resizer_no_mappings = 1
 
- nnoremap <silent> {Left-mapping} :TmuxResizeLeft<CR>
+ nnoremap <silent> {Left-Mapping} :TmuxResizeLeft<CR>
  nnoremap <silent> {Down-Mapping} :TmuxResizeDown<CR>
  nnoremap <silent> {Up-Mapping} :TmuxResizeUp<CR>
  nnoremap <silent> {Right-Mapping} :TmuxResizeRight<CR>
