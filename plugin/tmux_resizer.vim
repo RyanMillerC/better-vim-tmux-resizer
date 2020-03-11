@@ -103,7 +103,7 @@ function! s:TmuxAwareResize(direction)
     else
       let l:resize_count = g:tmux_resizer_resize_count
     endif
-    let args = 'resize-pane -' . tr(a:direction, 'hjkl', 'LDUR') . l:resize_count
+    let args = 'resize-pane -' . tr(a:direction, 'hjkl', 'LDUR') . ' ' . l:resize_count
     silent call s:TmuxCommand(args)
     if s:NeedsVitalityRedraw()
       redraw!
