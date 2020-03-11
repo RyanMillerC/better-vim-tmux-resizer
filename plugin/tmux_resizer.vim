@@ -6,35 +6,24 @@ if exists("g:loaded_tmux_resizer") || &cp || v:version < 700
 endif
 let g:loaded_tmux_resizer = 1
 
-function! s:IntelligentVimResize(direction) abort
-  let g:window_resize_count = get(g:, 'window_resize_count', 5)
-  let l:current_window_is_last_window = (winnr() == winnr('$'))
-
-  if (a:direction ==# 'left' || a:direction ==# 'up')
+function! s:VimResize(direction)
+  " Resize toward given direction, like tmux
+  if (a:direction ==# 'h' || a:direction ==# 'k')
     let [l:modifier_1, l:modifier_2] = ['+', '-']
   else
     let [l:modifier_1, l:modifier_2] = ['-', '+']
   endif
+  let l:current_window_is_last_window = (winnr() == winnr('$'))
   let l:modifier = l:current_window_is_last_window ? l:modifier_1 : l:modifier_2
 
-  if (a:direction ==# 'left' || a:direction ==# 'right')
+  if (a:direction ==# 'h' || a:direction ==# 'l')
     let l:command = 'vertical resize'
+    let l:window_resize_count = g:tmux_resizer_vertical_resize_count
   else
     let l:command = 'resize'
+    let l:window_resize_count = g:tmux_resizer_resize_count
   endif
-  execute l:command . ' ' . l:modifier . g:window_resize_count . '<CR>'
-endfunction
-
-function! s:VimResize(direction)
-  if a:direction == 'h'
-      call s:IntelligentVimResize('left')
-  elseif a:direction == 'j'
-      call s:IntelligentVimResize('down')
-  elseif a:direction == 'k'
-      call s:IntelligentVimResize('up')
-  elseif a:direction == 'l'
-      call s:IntelligentVimResize('right')
-  endif
+  execute l:command . ' ' . l:modifier . l:window_resize_count . '<CR>'
 endfunction
 
 if !get(g:, 'tmux_resizer_no_mappings', 0)
@@ -56,6 +45,14 @@ command! TmuxResizeLeft call s:TmuxAwareResize('h')
 command! TmuxResizeDown call s:TmuxAwareResize('j')
 command! TmuxResizeUp call s:TmuxAwareResize('k')
 command! TmuxResizeRight call s:TmuxAwareResize('l')
+
+if !exists("g:tmux_resizer_resize_count")
+  let g:tmux_resizer_resize_count = 5
+endif
+
+if !exists("g:tmux_resizer_vertical_resize_count")
+  let g:tmux_resizer_vertical_resize_count = 10
+endif
 
 function! s:TmuxOrTmateExecutable()
   return (match($TMUX, 'tmate') != -1 ? 'tmate' : 'tmux')
@@ -101,8 +98,12 @@ function! s:TmuxAwareResize(direction)
   " a) we're toggling between the last tmux pane;
   " b) we tried resizing windows in vim but it didn't have effect.
   if s:ShouldForwardResizeBackToTmux(tmux_last_pane, at_tab_page_edge)
-    " TODO: Allow user to specify resize amount
-    let args = 'resize-pane -' . tr(a:direction, 'hjkl', 'LDUR') . ' 5'
+    if (a:direction ==# 'h' || a:direction ==# 'l')
+      let l:resize_count = g:tmux_resizer_vertical_resize_count
+    else
+      let l:resize_count = g:tmux_resizer_resize_count
+    endif
+    let args = 'resize-pane -' . tr(a:direction, 'hjkl', 'LDUR') . l:resize_count
     silent call s:TmuxCommand(args)
     if s:NeedsVitalityRedraw()
       redraw!
