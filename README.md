@@ -101,7 +101,7 @@ Add the following to your `~/.vimrc` to define your custom maps:
 ``` vim
 let g:tmux_resizer_no_mappings = 1
 
-nnoremap <silent> {Left-mapping} :TmuxResizeLeft<CR>
+nnoremap <silent> {Left-Mapping} :TmuxResizeLeft<CR>
 nnoremap <silent> {Down-Mapping} :TmuxResizeDown<CR>
 nnoremap <silent> {Up-Mapping} :TmuxResizeUp<CR>
 nnoremap <silent> {Right-Mapping} :TmuxResizeRight<CR>
