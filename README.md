@@ -73,29 +73,26 @@ bind-key -T copy-mode-vi M-k resize-pane -U 5
 bind-key -T copy-mode-vi M-l resize-pane -R 10
 ```
 
-**NOTE:** If you use vim-tmux-navigator, you can omit the is_vim line since
-it should already be in your `tmux.conf` file.
+**NOTE:** If you use vim-tmux-navigator, you can omit the `is_vim` line since
+it should already be in your `~/.tmux.conf` file.
 
 #### TPM
 
 If you'd prefer, you can use the Tmux Plugin Manager ([TPM][]) instead of
 copying the snippet.
-When using TPM, add the following lines to your ~/.tmux.conf:
+When using TPM, add the following lines to your `~/.tmux.conf`:
 
 ``` tmux
-set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'RyanMillerC/vim-tmux-resizer'
 run '~/.tmux/plugins/tpm/tpm'
 ```
-
-Thanks to Christopher Sexton who provided the updated tmux configuration in
-[this blog post][].
 
 Configuration
 -------------
 
 ### Custom Key Bindings
 
-If you don't want the plugin to create any mappings, you can use the five
+If you don't want the plugin to create any mappings, you can use the four
 provided functions to define your own custom maps. You will need to define
 custom mappings in your `~/.vimrc` as well as update the bindings in tmux to
 match.
@@ -105,109 +102,41 @@ match.
 Add the following to your `~/.vimrc` to define your custom maps:
 
 ``` vim
-let g:tmux_navigator_no_mappings = 1
+let g:tmux_resizer_no_mappings = 1
 
-nnoremap <silent> {Left-Mapping} :TmuxNavigateLeft<cr>
-nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<cr>
-nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<cr>
-nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<cr>
-nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
+nnoremap <silent> {Left-mapping} :TmuxResizeLeft<CR>
+nnoremap <silent> {Down-Mapping} :TmuxResizeDown<CR>
+nnoremap <silent> {Up-Mapping} :TmuxResizeUp<CR>
+nnoremap <silent> {Right-Mapping} :TmuxResizeRight<CR>
 ```
 
 *Note* Each instance of `{Left-Mapping}` or `{Down-Mapping}` must be replaced
-in the above code with the desired mapping. Ie, the mapping for `<ctrl-h>` =>
-Left would be created with `nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>`.
+in the above code with the desired mapping. Ie, the mapping for `<meta-h>` =>
+Left would be created with `nnoremap <silent> <meta-h> :TmuxNavigateLeft<cr>`.
 
-##### Autosave on leave
+##### Window Resize Counts 
 
-You can configure the plugin to write the current buffer, or all buffers, when
-navigating from Vim to tmux. This functionality is exposed via the
-`g:tmux_navigator_save_on_switch` variable, which can have either of the
-following values:
+If the default increments for resizing do not suit your taste, you can
+configure this plugin to resize by specific increments both horizontally and
+vertically. These are configured with two variables in your `~/.vimrc` file.
 
-Value  | Behavior
------- | ------
-1      | `:update` (write the current buffer, but only if changed)
-2      | `:wall` (write all buffers)
+For horizontal resizing, set:
 
-To enable this, add the following (with the desired value) to your ~/.vimrc:
-
-```vim
-" Write all buffers before navigating from Vim to tmux pane
-let g:tmux_navigator_save_on_switch = 2
+``` vim
+let g:tmux_resizer_resize_count = 5
 ```
 
-##### Disable While Zoomed
+For vertical resizing, set:
 
-By default, if you zoom the tmux pane running Vim and then attempt to navigate
-"past" the edge of the Vim session, tmux will unzoom the pane. This is the
-default tmux behavior, but may be confusing if you've become accustomed to
-navigation "wrapping" around the sides due to this plugin.
-
-We provide an option, `g:tmux_navigator_disable_when_zoomed`, which can be used
-to disable this unzooming behavior, keeping all navigation within Vim until the
-tmux pane is explicitly unzoomed.
-
-To disable navigation when zoomed, add the following to your ~/.vimrc:
-
-```vim
-" Disable tmux navigator when zooming the Vim pane
-let g:tmux_navigator_disable_when_zoomed = 1
+``` vim
+let g:tmux_resizer_vertical_resize_count = 10
 ```
 
 #### Tmux
 
-Alter each of the five lines of the tmux configuration listed above to use your
+Alter each of the four lines of the tmux configuration listed above to use your
 custom mappings. **Note** each line contains two references to the desired
 mapping.
-
-### Additional Customization
-
-#### Restoring Clear Screen (C-l)
-
-The default key bindings include `<Ctrl-l>` which is the readline key binding
-for clearing the screen. The following binding can be added to your `~/.tmux.conf` file to provide an alternate mapping to `clear-screen`.
-
-``` tmux
-bind C-l send-keys 'C-l'
-```
-
-With this enabled you can use `<prefix> C-l` to clear the screen.
-
-Thanks to [Brian Hogan][] for the tip on how to re-map the clear screen binding.
-
-#### Nesting
-If you like to nest your tmux sessions, this plugin is not going to work
-properly. It probably never will, as it would require detecting when Tmux would
-wrap from one outermost pane to another and propagating that to the outer
-session.
-
-By default this plugin works on the outermost tmux session and the vim
-sessions it contains, but you can customize the behaviour by adding more
-commands to the expression used by the grep command.
-
-When nesting tmux sessions via ssh or mosh, you could extend it to look like
-`'(^|\/)g?(view|vim|ssh|mosh?)(diff)?$'`, which makes this plugin work within
-the innermost tmux session and the vim sessions within that one. This works
-better than the default behaviour if you use the outer Tmux sessions as relays
-to different hosts and have all instances of vim on remote hosts.
-
-Similarly, if you like to nest tmux locally, add `|tmux` to the expression.
-
-This behaviour means that you can't leave the innermost session with Ctrl-hjkl
-directly. These following fallback mappings can be targeted to the right Tmux
-session by escaping the prefix (Tmux' `send-prefix` command).
-
-``` tmux
-bind -r C-h run "tmux select-pane -L"
-bind -r C-j run "tmux select-pane -D"
-bind -r C-k run "tmux select-pane -U"
-bind -r C-l run "tmux select-pane -R"
-bind -r C-\ run "tmux select-pane -l"
-```
-
-Troubleshooting
----------------
 
 ### Vim -> Tmux doesn't work!
 
@@ -240,20 +169,6 @@ version to confirm with this shell command:
 ``` bash
 tmux -V # should return 'tmux 1.8'
 ```
-
-### Switching out of Vim Is Slow
-
-If you find that navigation within Vim (from split to split) is fine, but Vim
-to a non-Vim tmux pane is delayed, it might be due to a slow shell startup.
-Consider moving code from your shell's non-interactive rc file (e.g.,
-`~/.zshenv`) into the interactive startup file (e.g., `~/.zshrc`) as Vim only
-sources the non-interactive config.
-
-### It doesn't work in Vim's `terminal` mode
-
-Terminal mode is currently unsupported as adding this plugin's mappings there
-causes conflict with movement mappings for FZF (it also uses terminal mode).
-There's a conversation about this in https://github.com/christoomey/vim-tmux-navigator/pull/172
 
 ### It Doesn't Work in tmate
 
