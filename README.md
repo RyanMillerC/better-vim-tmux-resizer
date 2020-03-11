@@ -1,16 +1,16 @@
 # Vim Tmux Resizer
 
-## This repo is in progress. Don't use it...yet.
+> Resize tmux panes and Vim windows with ease.
 
 This is a fork of [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator)
-which allows resizing panes instead of switching panes.
+which allows resizing panes and windows instead of navigating between them.
+
+It is 100% compatible with vim-tmux-navigator so you can have both installed and
+navigate/resize with similar hotkeys.
 
 **NOTE**: This requires tmux v1.8 or higher.
 
-**NOTE:** Everything below this line is from the original project. Ignore it.
-
-Usage
------
+## Usage
 
 This plugin provides the following mappings which allow you to resize Vim panes
 and tmux splits seamlessly.
@@ -24,27 +24,26 @@ and tmux splits seamlessly.
 the mappings.
 
 If you want to use alternate key mappings, see the [configuration section
-below][].
+below](#configuration).
 
-Installation
-------------
+## Installation
 
 ### Vim
 
-If you don't have a preferred installation method, I recommend using [Vundle][].
-Assuming you have Vundle installed and configured, the following steps will
-install the plugin:
+If you don't have a preferred installation method, I recommend using
+[Plug](https://github.com/junegunn/vim-plug). Assuming you have Plug installed
+and configured, the following steps will install the plugin:
 
-Add the following line to your `~/.vimrc` file
+Add the following line to your `~/.vimrc` file:
 
 ``` vim
-Plugin 'RyanMillerC/vim-tmux-resizer'
+Plug 'RyanMillerC/vim-tmux-resizer'
 ```
 
-Then run
+Then run:
 
 ```
-:PluginInstall
+:PlugInstall
 ```
 
 ### tmux
@@ -78,8 +77,8 @@ it should already be in your `~/.tmux.conf` file.
 
 #### TPM
 
-If you'd prefer, you can use the Tmux Plugin Manager ([TPM][]) instead of
-copying the snippet.
+If you'd prefer, you can use the Tmux Plugin Manager
+([TPM](https://github.com/tmux-plugins/tpm)) instead of copying the snippet.
 When using TPM, add the following lines to your `~/.tmux.conf`:
 
 ``` tmux
@@ -87,8 +86,7 @@ set -g @plugin 'RyanMillerC/vim-tmux-resizer'
 run '~/.tmux/plugins/tpm/tpm'
 ```
 
-Configuration
--------------
+## Configuration
 
 ### Custom Key Bindings
 
@@ -112,7 +110,7 @@ nnoremap <silent> {Right-Mapping} :TmuxResizeRight<CR>
 
 *Note* Each instance of `{Left-Mapping}` or `{Down-Mapping}` must be replaced
 in the above code with the desired mapping. Ie, the mapping for `<meta-h>` =>
-Left would be created with `nnoremap <silent> <meta-h> :TmuxNavigateLeft<cr>`.
+Left would be created with `nnoremap <silent> <meta-h> :TmuxResizeLeft<cr>`.
 
 ##### Window Resize Counts 
 
@@ -138,6 +136,8 @@ Alter each of the four lines of the tmux configuration listed above to use your
 custom mappings. **Note** each line contains two references to the desired
 mapping.
 
+## Troubleshooting
+
 ### Vim -> Tmux doesn't work!
 
 This is likely due to conflicting key mappings in your `~/.vimrc`. You can use
@@ -156,10 +156,8 @@ S+   vim
 S+   tmux
 ```
 
-If you encounter a different output please [open an issue][] with as much info
-about your OS, Vim version, and tmux version as possible.
-
-[open an issue]: https://github.com/christoomey/vim-tmux-navigator/issues/new
+If you encounter a different output please [open an issue](https://github.com/RyanMillerC/vim-tmux-resizer/issues)
+with as much info about your OS, Vim version, and tmux version as possible.
 
 ### Tmux Can't Tell if Vim Is Active
 
@@ -172,27 +170,17 @@ tmux -V # should return 'tmux 1.8'
 
 ### It Doesn't Work in tmate
 
-[tmate][] is a tmux fork that aids in setting up remote pair programming
-sessions. It is designed to run alongside tmux without issue, but occasionally
-there are hiccups. Specifically, if the versions of tmux and tmate don't match,
-you can have issues. See [this
-issue](https://github.com/christoomey/vim-tmux-navigator/issues/27) for more
-detail.
+[tmate](http://tmate.io/) is a tmux fork that aids in setting up remote pair
+programming sessions. It is designed to run alongside tmux without issue, but
+occasionally there are hiccups. Specifically, if the versions of tmux and tmate
+don't match, you can have issues.
 
-[tmate]: http://tmate.io/
+See [this issue](https://github.com/christoomey/vim-tmux-navigator/issues/27) from
+vim-tmux-navigator for more detail.
 
 ### It Still Doesn't Work!!!
 
 The tmux configuration uses an inlined grep pattern match to help determine if
-the current pane is running Vim. If you run into any issues with the navigation
-not happening as expected, you can try using [Mislav's original external
-script][] which has a more robust check.
-
-[Brian Hogan]: https://twitter.com/bphogan
-[Mislav Marohnić's]: http://mislav.uniqpath.com/
-[Mislav's original external script]: https://github.com/mislav/dotfiles/blob/master/bin/tmux-vim-select-pane
-[Vundle]: https://github.com/gmarik/vundle
-[TPM]: https://github.com/tmux-plugins/tpm
-[configuration section below]: #custom-key-bindings
-[this blog post]: http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits
-[this gist]: https://gist.github.com/mislav/5189704
+the current pane is running Vim. If you run into any issues with the resize
+not happening as expected, you can open an issue
+[here](https://github.com/RyanMillerC/vim-tmux-resizer/issues).
