@@ -1,4 +1,4 @@
-# Vim Tmux Resizer
+# (Better) Vim Tmux Resizer
 
 > Resize tmux panes and Vim windows with ease.
 
@@ -36,7 +36,7 @@ and configured, the following steps will install the plugin:
 Add the following line to your `~/.vimrc` file:
 
 ``` vim
-Plug 'RyanMillerC/vim-tmux-resizer'
+Plug 'RyanMillerC/better-vim-tmux-resizer'
 ```
 
 Then run:
@@ -55,7 +55,7 @@ Add the following to your `~/.tmux.conf` file:
 
 ``` tmux
 # Smart pane resizing with awareness of Vim splits.
-# See: https://github.com/RyanMillerC/vim-tmux-resizer
+# See: https://github.com/RyanMillerC/better-vim-tmux-resizer
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
     | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
@@ -81,7 +81,7 @@ If you'd prefer, you can use the Tmux Plugin Manager
 When using TPM, add the following lines to your `~/.tmux.conf`:
 
 ``` tmux
-set -g @plugin 'RyanMillerC/vim-tmux-resizer'
+set -g @plugin 'RyanMillerC/better-vim-tmux-resizer'
 run '~/.tmux/plugins/tpm/tpm'
 ```
 
@@ -155,7 +155,7 @@ S+   vim
 S+   tmux
 ```
 
-If you encounter a different output please [open an issue](https://github.com/RyanMillerC/vim-tmux-resizer/issues)
+If you encounter a different output please [open an issue](https://github.com/RyanMillerC/better-vim-tmux-resizer/issues)
 with as much info about your OS, Vim version, and tmux version as possible.
 
 ### Tmux Can't Tell if Vim Is Active
@@ -182,4 +182,4 @@ vim-tmux-navigator for more detail.
 The tmux configuration uses an inlined grep pattern match to help determine if
 the current pane is running Vim. If you run into any issues with the resize
 not happening as expected, you can open an issue
-[here](https://github.com/RyanMillerC/vim-tmux-resizer/issues).
+[here](https://github.com/RyanMillerC/better-vim-tmux-resizer/issues).
