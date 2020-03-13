@@ -1,14 +1,14 @@
-*tmux-resizer.txt* Plugin to allow seamless pane/split resizing between tmux
-and vim
+*better-vim-tmux-resizer.txt* Plugin to allow seamless pane/split resizing
+between tmux and vim
 
 ==============================================================================
-CONTENTS                               *tmux-resizer-contents*
+CONTENTS                               *better-vim-tmux-resizer-contents*
 
 
 ==============================================================================
-INTRODUCTION                           *tmux-resizer*
+INTRODUCTION                           *better-vim-tmux-resizer*
 
-Vim-tmux-resizer is a little plugin which enables seamless resizing of
+Better-vim-tmux-resizer is a little plugin which enables seamless resizing of
 panes/splits between tmux and vim. This plugin is a fork of vim-tmux-navigator
 and uses the same basic structure. When combined with a set of tmux key
 bindings, the plugin will allow you to resize seamlessly between vim panes and
@@ -20,7 +20,7 @@ installed and navigate/resize with similar hotkeys.
 NOTE: This requires tmux v1.8 or higher.
 
 ==============================================================================
-CONFIGURATION                             *tmux-resizer-configuration*
+CONFIGURATION                         *better-vim-tmux-resizer-configuration*
 
 * Amount of spaces to resize horizontally
  let g:tmux_resizer_resize_count = 5
