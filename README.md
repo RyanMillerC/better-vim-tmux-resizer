@@ -9,6 +9,13 @@ with similar hotkeys.
 
 **NOTE**: This requires tmux v1.8 or higher.
 
+## Why not use [vim-tmux-resizer](https://github.com/melonmanchan/vim-tmux-resizer)?
+
+Because this plugin allows for a seamless experience between tmux panes and Vim windows.
+Vim-tmux-resizer doesn't pass resize bindings to tmux when inside a pane running Vim.
+Better-vim-tmux-resizer gives more seamless control by enabling resizing tmux within a
+pane running Vim. 
+
 ## Usage
 
 This plugin provides the following mappings which allow you to resize Vim panes
