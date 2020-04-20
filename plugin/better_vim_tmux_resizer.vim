@@ -1,5 +1,6 @@
-" Maps <M-h/j/k/l> to resize vim splits in the given direction. If there
-" are no more windows in that direction, forwards the operation to tmux.
+" Maps <M-h/j/k/l> to resize vim splits in the given direction.
+" If the movement operation has no effect in Vim, it forwards the operation to
+" Tmux.
 
 if exists("g:loaded_tmux_resizer") || &cp || v:version < 700
   finish
