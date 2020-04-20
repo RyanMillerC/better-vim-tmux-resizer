@@ -18,3 +18,9 @@ make test
 This will load a new vim session inside of a new tmux session. Both sessions
 will use the *.tmux.conf* and *.vimrc* from */test* in this repo, instead of
 your user's configuration files.
+
+To test Vim only, from a terminal **with no tmux session**, run:
+
+```
+make vim
+```
