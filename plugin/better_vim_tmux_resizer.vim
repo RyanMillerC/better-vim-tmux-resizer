@@ -89,16 +89,18 @@ function! s:ShouldForwardResizeBackToTmux(tmux_last_pane, at_tab_page_edge)
 endfunction
 
 function! s:TmuxAwareResize(direction)
+  let l:previous_window_width = winwidth(0)
+  let l:previous_window_height = winheight(0)
+
+  " TODO: Figure out if this is needed
   let nr = winnr()
-  let tmux_last_pane = (a:direction == 'p' && s:tmux_is_last_pane)
-  if !tmux_last_pane
-    call s:VimResize(a:direction)
-  endif
-  let at_tab_page_edge = (nr == winnr())
-  " Forward the resize panes command to tmux if:
-  " a) we're toggling between the last tmux pane;
-  " b) we tried resizing windows in vim but it didn't have effect.
-  if s:ShouldForwardResizeBackToTmux(tmux_last_pane, at_tab_page_edge)
+
+  " Attempt resizing vim
+  call s:VimResize(a:direction)
+
+  let l:new_window_width = winwidth(0)
+  let l:new_window_height = winheight(0)
+  if (l:previous_window_height == l:new_window_height && l:previous_window_width == l:new_window_width)
     if (a:direction == 'h' || a:direction == 'l')
       let l:resize_count = g:tmux_resizer_vertical_resize_count
     else
@@ -109,8 +111,5 @@ function! s:TmuxAwareResize(direction)
     if s:NeedsVitalityRedraw()
       redraw!
     endif
-    let s:tmux_is_last_pane = 1
-  else
-    let s:tmux_is_last_pane = 0
   endif
 endfunction
