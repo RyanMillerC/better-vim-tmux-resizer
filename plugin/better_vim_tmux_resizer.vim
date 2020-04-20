@@ -67,12 +67,10 @@ function! s:TmuxCommand(args)
   return system(cmd)
 endfunction
 
-" NOTE: I don't think this function is doing anything
-"
-" function! s:TmuxResizerProcessList()
-"   echo s:TmuxCommand("run-shell 'ps -o state= -o comm= -t ''''#{pane_tty}'''''")
-" endfunction
-" command! TmuxResizerProcessList call s:TmuxResizerProcessList()
+function! s:TmuxResizerProcessList()
+  echo s:TmuxCommand("run-shell 'ps -o state= -o comm= -t ''''#{pane_tty}'''''")
+endfunction
+command! TmuxResizerProcessList call s:TmuxResizerProcessList()
 
 let s:tmux_is_last_pane = 0
 augroup tmux_resizer
