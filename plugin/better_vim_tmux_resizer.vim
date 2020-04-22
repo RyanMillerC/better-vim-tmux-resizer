@@ -96,9 +96,3 @@ function! s:TmuxAwareResize(direction)
     endif
   endif
 endfunction
-
-" For debugging
-function! s:TmuxResizerProcessList()
-  echo s:TmuxCommand("run-shell 'ps -o state= -o comm= -t ''''#{pane_tty}'''''")
-endfunction
-command! TmuxResizerProcessList call s:TmuxResizerProcessList()
