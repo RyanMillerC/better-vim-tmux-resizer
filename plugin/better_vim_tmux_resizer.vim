@@ -23,6 +23,24 @@ if !exists("g:tmux_resizer_no_mappings")
 endif
 
 function! s:VimResize(direction)
+  " Prevent resizing Vim upward when there is only a single window
+  if (a:direction == 'j' && winnr('$') <= 1)
+    return
+  endif
+
+  " Prevent resizing Vim upward when down is pressed with all vsplit windows
+  if (a:direction == 'k')
+    let l:all_windows_are_vsplit = 1
+    for l:window in range(1, winnr('$'))
+      if (win_screenpos(l:window)[0] != 1)
+        let l:all_windows_are_vsplit = 0
+      endif
+    endfor
+    if (l:all_windows_are_vsplit)
+      return
+    endif
+  endif
+
   " Resize Vim window toward given direction, like tmux
   let l:current_window_is_last_window = (winnr() == winnr('$'))
   if (a:direction == 'h' || a:direction == 'k')
