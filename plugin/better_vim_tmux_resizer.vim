@@ -28,8 +28,8 @@ function! s:VimResize(direction)
     return
   endif
 
-  " Prevent resizing Vim upward when down is pressed with all vsplit windows
-  if (a:direction == 'k')
+  " Prevent resizing Vim upwards when all windows are vsplit
+  if (a:direction == 'k' || a:direction == 'j')
     let l:all_windows_are_vsplit = 1
     for l:window in range(1, winnr('$'))
       if (win_screenpos(l:window)[0] != 1)
